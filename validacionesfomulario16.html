@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios</title>
+    <link rel="stylesheet" href="CSS\estilo.css">
+</head>
+<body>
+    <h1>Página con un formulario</h1>
+
+    <form id="formulario" action="mailto:destino@servidor.com?subject=prueba" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario();">
+        <fieldset>
+            <legend>Datos generales</legend>
+            <table width="740" border="0" cellpadding="5">
+                <tr>
+                    <td align="right" width="164">Teclee su <u>n</u>ombre:</td>
+                    <td colspan="3">
+                        <input type="text" name="nombre_usuario" size="20" maxlength="50" tabindex="1" accesskey="n" required>
+                        <span class="error" id="nombre_error"></span>
+                    </td>
+                    <td width="122" align="right">Teclee su <u>c</u>lave:</td>
+                    <td width="77">
+                        <input type="password" name="clave" size="10" maxlength="25" tabindex="2" accesskey="c" required>
+                        <span class="error" id="clave_error"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" width="164"><u>O</u>pine sobre mi página:</td>
+                    <td rowspan="2" colspan="3">
+                        <textarea name="opinion" cols="30" rows="5" wrap="virtual" tabindex="3" accesskey="o" required></textarea>
+                        <span class="error" id="opinion_error"></span>
+                    </td>
+                    <td rowspan="2" colspan="2">&nbsp;</td>
+                </tr>
+                <tr><td width="164">&nbsp;</td></tr>
+                <tr>
+                    <td align="right" width="164">Mayor de edad:</td>
+                    <td width="80">
+                        <input type="checkbox" name="adulto" value="si" checked tabindex="4" accesskey="m">
+                    </td>
+                    <td width="101" align="right"><u>S</u>exo: Masculino</td>
+                    <td width="115">
+                        <input type="radio" name="sexo" value="m" checked tabindex="5" accesskey="s" required>
+                    </td>
+                    <td width="122" align="right"><u>I</u>ngresos: 10000 &euro;</td>
+                    <td width="77">
+                        <input type="radio" name="sueldo" value="10" checked tabindex="7" accesskey="i" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="164">&nbsp;</td>
+                    <td width="80">&nbsp;</td>
+                    <td align="right" width="101">Femenino</td>
+                    <td width="115">
+                        <input type="radio" name="sexo" value="f" tabindex="6" required>
+                    </td>
+                    <td width="122" align="right">10000-20000 &euro;</td>
+                    <td width="77">
+                        <input type="radio" name="sueldo" value="1020" tabindex="8" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="164">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
+                    <td width="122" align="right">más de 20000 &euro;</td>
+                    <td width="77">
+                        <input type="radio" name="sueldo" value="20" tabindex="9" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" height="7" width="164">Env&iacute;e un <u>f</u>ichero:</td>
+                    <td height="7" colspan="3">
+                        <input type="file" name="archivo" size="30" tabindex="10" accesskey="f" accept=".jpg, .png, .pdf" required>
+                        <span class="error" id="archivo_error"></span>
+                    </td>
+                    <td colspan="2" height="7">&nbsp;</td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Otros datos</legend>
+            <table width="740" border="0" cellpadding="5">
+                <tr>
+                    <td align="right" rowspan="2" valign="top" width="164">Indique su <u>p</u>rovincia:</td>
+                    <td width="80" rowspan="2" valign="top">
+                        <select name="provincia" tabindex="11" accesskey="p" required>
+                            <option value="">Seleccione una provincia</option>
+                            <option value="1">Madrid</option>
+                            <option value="2">Barcelona</option>
+                            <option value="3">Toledo</option>
+                            <option value="4">Canarias</option>
+                            <option value="5">Zaragoza</option>
+                            <option value="6">Otras</option>
+                        </select>
+                        <span class="error" id="provincia_error"></span>
+                    </td>
+                    <td width="101" align="right"><u>H</u>obbies:</td>
+                    <td width="115" rowspan="2">
+                        <select name="pasatiempo" size="3" multiple tabindex="12" accesskey="h" required>
+                            <option value="1">Chat</option>
+                            <option value="2">Juegos</option>
+                            <option value="3">Arte</option>
+                            <option value="4">Cine</option>
+                            <option value="5">Poesía</option>
+                            <option value="6">Otros</option>
+                        </select>
+                        <span class="error" id="pasatiempo_error"></span>
+                    </td>
+                    <td colspan="2" rowspan="2>&nbsp;</td>
+                </tr>
+                <tr><td width="101">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" name="mandar" value="Enviar" tabindex="13">
+                    </td>
+                    <td colspan="2">
+                        <input type="reset" name="borrado" value="Borrar" tabindex="14">
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="escondido" value="oculto">
+        </fieldset>
+    </form>
+
+     <script>
+        function validarFormulario() {
+            let valid = true; // Variable para controlar la validez del formulario
+
+            // Validaciones de nombre
+            const nombre = document.forms["formulario"]["nombre_usuario"].value;
+            if (nombre.trim() === "") {
+                document.getElementById("nombre_error").textContent = "El nombre es obligatorio."; // Mensaje de error
+                valid = false; // Establece que el formulario no es válido
+            } else {
+                document.getElementById("nombre_error").textContent = ""; // Limpia el mensaje de error
+            }
+
+            // Validaciones de clave
+            //Esta línea obtiene el valor ingresado en el campo de la clave del formulario.
+            const clave = document.forms["formulario"]["clave"].value;
+            //clave.trim() elimina los espacios en blanco al inicio y al final del valor de la clave.
+            //Condicion si la funcion clave .trim es igual a blanco o si la longitud de la clave es menor de 6 caracteres entra a mostrar el mensaje de error
+            if (clave.trim() === "" || clave.length < 6) {
+                document.getElementById("clave_error").textContent = "La clave debe tener al menos 6 caracteres."; // Mensaje de error
+                valid = false; // Establece que el formulario no es válido
+            } else {
+                document.getElementById("clave_error").textContent = ""; // Limpia el mensaje de error
+            }
+
+            // Validaciones de opinión
+            const opinion = document.forms["formulario"]["opinion"].value;
+            if (opinion.trim() === "") {
+                document.getElementById("opinion_error").textContent = "La opinión es obligatoria."; // Mensaje de error
+                valid = false; // Establece que el formulario no es válido
+            } else {
+                document.getElementById("opinion_error").textContent = ""; // Limpia el mensaje de error
+            }
+
+            // Validaciones de archivo
+            const archivo = document.forms["formulario"]["archivo"].value;
+            if (archivo.trim() === "") {
+                document.getElementById("archivo_error").textContent = "El archivo es obligatorio."; // Mensaje de error
+                valid = false; // Establece que el formulario no es válido
+            } else {
+                document.getElementById("archivo_error").textContent = ""; // Limpia el mensaje de error
+            }
+
+            // Validaciones de provincia
+            const provincia = document.forms["formulario"]["provincia"].value;
+            if (provincia === "") {
+                document.getElementById("provincia_error").textContent = "La provincia es obligatoria."; // Mensaje de error
+                valid = false; // Establece que el formulario no es válido
+            } else {
+                document.getElementById("provincia_error").textContent = ""; // Limpia el mensaje de error
+            }
+
+            return valid; // Retorna true si todas las validaciones son correctas, o false si alguna falla
+        }
+    </script>
+</body>
+</html>
